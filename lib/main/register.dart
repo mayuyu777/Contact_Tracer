@@ -36,6 +36,7 @@ class _RegisterState extends State<Register> {
           child: Stack(
           children: [
             PageView(
+              physics: NeverScrollableScrollPhysics(),
               controller: pageController,
               onPageChanged: (num){
                 setState(() {
