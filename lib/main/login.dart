@@ -1,3 +1,4 @@
+import 'package:contact_tracer/main/forgotpass.dart';
 import 'package:flutter/material.dart';
 import 'package:contact_tracer/widgets/widgets.dart';
 
@@ -24,7 +25,7 @@ class _LoginState extends State<Login> {
             Center(
               child: SingleChildScrollView(
                   child: Container(
-                  margin: EdgeInsets.only(top:110),
+                  margin: EdgeInsets.only(top:50),
                   width: 360,
                   child: Column(
                     children: [
@@ -34,7 +35,7 @@ class _LoginState extends State<Login> {
                         textInputAction: TextInputAction.done,
                         style: TextStyle(fontSize: 20),
                         decoration: InputDecoration(
-                          labelStyle: TextStyle(color: Colors.white),
+                          labelStyle: TextStyle(color: Colors.white70),
                           filled: true,
                           fillColor: Colors.black45,
                           border: OutlineInputBorder(),
@@ -60,7 +61,7 @@ class _LoginState extends State<Login> {
                         textInputAction: TextInputAction.done,
                         style: TextStyle(fontSize: 20),
                         decoration:  InputDecoration(
-                          labelStyle: TextStyle(color: Colors.white),
+                          labelStyle: TextStyle(color: Colors.white70),
                           filled: true,
                           fillColor:  Colors.black45,
                           border: OutlineInputBorder(),
@@ -85,13 +86,15 @@ class _LoginState extends State<Login> {
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           primary: Colors.redAccent[700],
-                          minimumSize: Size(391,60)
+                          minimumSize: Size(391,55)
                         ),
-                        child:Row(mainAxisAlignment: MainAxisAlignment.center,children:[Icon(Icons.login),Text('LOGIN',style: TextStyle(color: Colors.white,fontSize: 19),)] ),
+                        child:Row(mainAxisAlignment: MainAxisAlignment.center,children:[Icon(Icons.login),Text(' LOGIN',style: TextStyle(color: Colors.white,fontSize: 19),)] ),
                         onPressed: (){}
                       ),
                       SizedBox(height: 20,),
-                      TextButton(child: Text('Forgot Password', style: TextStyle(color: Colors.white70,fontSize: 17,fontWeight: FontWeight.bold)),onPressed: (){},)
+                      TextButton(child: Text('Forgot Password', style: TextStyle(color: Colors.white70,fontSize: 17,fontWeight: FontWeight.bold)),onPressed: (){
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => ForgotPass()));
+                      },)
 
                     ],
                   ),

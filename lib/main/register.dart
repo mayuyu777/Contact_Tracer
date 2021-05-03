@@ -49,7 +49,7 @@ class _RegisterState extends State<Register> {
                 thirdForm(),
               ],
             ),
-            Positioned(
+            index==2?Container():Positioned(
             bottom: 20,
             right: 20,
             child: MaterialButton(
@@ -128,7 +128,7 @@ class _RegisterState extends State<Register> {
         padding: EdgeInsets.symmetric(horizontal: 40),
       child: Column(
         children: [
-          SizedBox(height: 50,),
+          SizedBox(height: 100,),
           Container(child: Text('SELECT USER TYPE',style: TextStyle(color: Colors.grey[600],fontSize: 18.5),textAlign: TextAlign.center,)),
           SizedBox(height: 50,),
           Icon(Icons.person_outline,color:Colors.red[900],size:150),
@@ -229,6 +229,15 @@ class _RegisterState extends State<Register> {
                    passwordTextField(_passwordcontroller,1,'Password'),
                    SizedBox(height: 10,),
                    passwordTextField(_confirmpasswordcontroller,2,'Confirm Password'),
+                   SizedBox(height: 25,),
+                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.redAccent[700],
+                      minimumSize: Size(391,55)
+                    ),
+                    child:Row(mainAxisAlignment: MainAxisAlignment.center,children:[Icon(Icons.login),Text(' Register',style: TextStyle(color: Colors.white,fontSize: 19),)] ),
+                    onPressed: (){}
+                  ),
                 ],
               ),
             ),
@@ -248,6 +257,15 @@ class _RegisterState extends State<Register> {
                    passwordTextField(_passwordcontroller,1,'Password'),
                    SizedBox(height: 10,),
                    passwordTextField(_confirmpasswordcontroller,2,'Confirm Password'),
+                   SizedBox(height: 20,),
+                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.redAccent[700],
+                      minimumSize: Size(391,55)
+                    ),
+                    child:Row(mainAxisAlignment: MainAxisAlignment.center,children:[Icon(Icons.login),Text(' Register',style: TextStyle(color: Colors.white,fontSize: 19),)] ),
+                    onPressed: (){}
+                  ),
                 ],
           ),
             ),
