@@ -1,4 +1,5 @@
 import 'package:contact_tracer/main/forgotpass.dart';
+import 'package:contact_tracer/main/home.dart';
 import 'package:flutter/material.dart';
 import 'package:contact_tracer/widgets/widgets.dart';
 
@@ -12,6 +13,7 @@ class _LoginState extends State<Login> {
 
   final _emailcontroller = TextEditingController();
   final  _passwordcontroller = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   bool isobscure = true;
 
   @override
@@ -24,81 +26,89 @@ class _LoginState extends State<Login> {
             appbar(context,2),
             Center(
               child: SingleChildScrollView(
-                  child: Container(
-                  margin: EdgeInsets.only(top:50),
-                  width: 360,
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        controller:_emailcontroller,
-                        keyboardType: TextInputType.emailAddress,
-                        textInputAction: TextInputAction.done,
-                        style: TextStyle(fontSize: 20),
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(color: Colors.white70),
-                          filled: true,
-                          fillColor: Colors.black45,
-                          border: OutlineInputBorder(),
-                          labelText: "Email",
-                          prefixIcon: Icon(Icons.email),
-                        ),
-                        validator: (value){
-                          final pattern = r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)';
-                          final regExp = RegExp(pattern);
+                  child: Form(
+                  key: _formKey,
+                   child: Container(
+                    margin: EdgeInsets.only(top:50),
+                    width: 360,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller:_emailcontroller,
+                          keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.done,
+                          style: TextStyle(fontSize: 20),
+                          decoration: InputDecoration(
+                            labelStyle: TextStyle(color: Colors.white70),
+                            filled: true,
+                            fillColor: Colors.black45,
+                            border: OutlineInputBorder(),
+                            labelText: "Email",
+                            prefixIcon: Icon(Icons.email_outlined),
+                          ),
+                          validator: (value){
+                            final pattern = r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)';
+                            final regExp = RegExp(pattern);
 
-                          if (value.isEmpty) {
-                            return 'Enter an email';
-                          } else if (!regExp.hasMatch(value)) {
-                            return 'Enter a valid email';
-                          } else {
-                            return null;
-                          }
-                        },
-                      ),
-                      SizedBox(height: 10,),
-                      TextFormField(
-                        controller: _passwordcontroller,
-                        textInputAction: TextInputAction.done,
-                        style: TextStyle(fontSize: 20),
-                        decoration:  InputDecoration(
-                          labelStyle: TextStyle(color: Colors.white70),
-                          filled: true,
-                          fillColor:  Colors.black45,
-                          border: OutlineInputBorder(),
-                          labelText: "Password",
-                          prefixIcon: Icon(Icons.lock),
-                          suffixIcon: IconButton( icon: Icon( isobscure ? Icons.visibility: Icons.visibility_off), onPressed: ()=>setState((){
-                                isobscure = !isobscure;
-                            })),
+                            if (value.isEmpty) {
+                              return 'Enter an email';
+                            } else if (!regExp.hasMatch(value)) {
+                              return 'Enter a valid email';
+                            } else {
+                              return null;
+                            }
+                          },
                         ),
-                        obscureText: isobscure,
-                        validator: (value){
-                          if(value.isEmpty){
-                            return 'Enter password';
-                          }else if (value.length < 8) {
-                            return 'Password must be at least 8 characters long';
-                          } else {
-                            return null;
-                          }
-                        },
-                      ),
-                      SizedBox(height: 50,),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.redAccent[700],
-                          minimumSize: Size(391,55)
+                        SizedBox(height: 10,),
+                        TextFormField(
+                          controller: _passwordcontroller,
+                          textInputAction: TextInputAction.done,
+                          style: TextStyle(fontSize: 20),
+                          decoration:  InputDecoration(
+                            labelStyle: TextStyle(color: Colors.white70),
+                            filled: true,
+                            fillColor:  Colors.black45,
+                            border: OutlineInputBorder(),
+                            labelText: "Password",
+                            prefixIcon: Icon(Icons.lock_outline),
+                            suffixIcon: IconButton( icon: Icon( isobscure ? Icons.visibility: Icons.visibility_off), onPressed: ()=>setState((){
+                                  isobscure = !isobscure;
+                              })),
+                          ),
+                          obscureText: isobscure,
+                          validator: (value){
+                            if(value.isEmpty){
+                              return 'Enter password';
+                            }else if (value.length < 8) {
+                              return 'Password must be at least 8 characters long';
+                            } else {
+                              return null;
+                            }
+                          },
                         ),
-                        child:Row(mainAxisAlignment: MainAxisAlignment.center,children:[Icon(Icons.login),Text(' LOGIN',style: TextStyle(color: Colors.white,fontSize: 19),)] ),
-                        onPressed: (){}
-                      ),
-                      SizedBox(height: 20,),
-                      TextButton(child: Text('Forgot Password', style: TextStyle(color: Colors.white70,fontSize: 17,fontWeight: FontWeight.bold)),onPressed: (){
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => ForgotPass()));
-                      },)
+                        SizedBox(height: 50,),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.redAccent[700],
+                            minimumSize: Size(391,55)
+                          ),
+                          child:Row(mainAxisAlignment: MainAxisAlignment.center,children:[Icon(Icons.login),Text(' LOGIN',style: TextStyle(color: Colors.white,fontSize: 19),)] ),
+                          onPressed: (){
+                             if (_formKey.currentState.validate()) {
+                             _formKey.currentState.save();
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => Homepage()));
+                            }  
+                          }
+                        ),
+                        SizedBox(height: 20,),
+                        TextButton(child: Text('Forgot Password', style: TextStyle(color: Colors.white70,fontSize: 17,fontWeight: FontWeight.bold)),onPressed: (){
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => ForgotPass()));
+                        },)
 
-                    ],
-                  ),
+                      ],
+                    ),
                 ),
+                  ),
               ),
             ),
           ],

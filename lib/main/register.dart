@@ -1,3 +1,4 @@
+import 'package:contact_tracer/main/home.dart';
 import 'package:flutter/material.dart';
 import 'package:contact_tracer/widgets/widgets.dart';
 
@@ -168,12 +169,12 @@ class _RegisterState extends State<Register> {
                   SizedBox(height: 10,),
                   nameTextField(_lastnamecontroller,"Lastname",'Enter Lastname','Lastname must have at least 3 characters','Lastname must not exceed 10 characters'),
                   SizedBox(height: 10,),
-                   constantTextfield(Icon(Icons.place),_addresscontroller,"Home Address",'Enter Home Address',1),
+                   constantTextfield(Icon(Icons.place_outlined),_addresscontroller,"Home Address",'Enter Home Address',1),
                   SizedBox(height: 10,),
                   Center(child: TextField(
                     readOnly: true,
                     controller: dateController,
-                    decoration: InputDecoration( hintText: 'Date of Birth', hintStyle: TextStyle(fontSize: 20),prefixIcon: Icon(Icons.calendar_today),
+                    decoration: InputDecoration( hintText: 'Date of Birth', hintStyle: TextStyle(fontSize: 20),prefixIcon: Icon(Icons.calendar_today_outlined),
                     filled: true,fillColor: Colors.grey[900],border: OutlineInputBorder(),),
                     onTap: () async {
                     var date =  await showDatePicker(
@@ -198,9 +199,9 @@ class _RegisterState extends State<Register> {
               child: Column(
                 children: [
                   SizedBox(height: 70,),
-                  constantTextfield(Icon(Icons.store),_establishmentcontroller,"Establishment",'Enter name of Establishment',0),
+                  constantTextfield(Icon(Icons.store_outlined),_establishmentcontroller,"Establishment",'Enter name of Establishment',0),
                   SizedBox(height: 10,),
-                  constantTextfield(Icon(Icons.place),_addresscontroller,"Store Address",'Enter Store Address',1),
+                  constantTextfield(Icon(Icons.place_outlined),_addresscontroller,"Store Address",'Enter Store Address',1),
                   SizedBox(height: 10,),
                   phoneTextField(_phonecontroller),
                 ],
@@ -236,7 +237,12 @@ class _RegisterState extends State<Register> {
                       minimumSize: Size(391,55)
                     ),
                     child:Row(mainAxisAlignment: MainAxisAlignment.center,children:[Icon(Icons.login),Text(' Register',style: TextStyle(color: Colors.white,fontSize: 19),)] ),
-                    onPressed: (){}
+                    onPressed: (){
+                       if (_formKey.currentState.validate() && _passwordcontroller==_confirmpasswordcontroller) {
+                           _formKey.currentState.save();
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => Homepage()));
+                       }  
+                     }
                   ),
                 ],
               ),
@@ -264,7 +270,12 @@ class _RegisterState extends State<Register> {
                       minimumSize: Size(391,55)
                     ),
                     child:Row(mainAxisAlignment: MainAxisAlignment.center,children:[Icon(Icons.login),Text(' Register',style: TextStyle(color: Colors.white,fontSize: 19),)] ),
-                    onPressed: (){}
+                    onPressed: (){
+                       if (_formKey.currentState.validate()) {
+                           _formKey.currentState.save();
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => Homepage()));
+                       }  
+                    }
                   ),
                 ],
           ),
@@ -309,7 +320,7 @@ class _RegisterState extends State<Register> {
         fillColor: Colors.grey[900],
         border: OutlineInputBorder(),
         labelText: label,
-        prefixIcon: Icon(Icons.person),
+        prefixIcon: Icon(Icons.person_outline),
       ),
       validator: (value){
         if (value.isEmpty) {
@@ -337,7 +348,7 @@ class _RegisterState extends State<Register> {
         fillColor: Colors.grey[900],
         border: OutlineInputBorder(),
         labelText: "Phone Number",
-        prefixIcon: Icon(Icons.phone),
+        prefixIcon: Icon(Icons.phone_outlined),
       ),
       validator: (value){
         if (value.isEmpty) {
@@ -361,7 +372,7 @@ class _RegisterState extends State<Register> {
         fillColor: Colors.grey[900],
         border: OutlineInputBorder(),
         labelText: "Email",
-        prefixIcon: Icon(Icons.email),
+        prefixIcon: Icon(Icons.email_outlined),
       ),
       validator: (value){
         final pattern = r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)';
@@ -388,7 +399,7 @@ class _RegisterState extends State<Register> {
         fillColor: Colors.grey[900],
         border: OutlineInputBorder(),
         labelText: label,
-        prefixIcon: Icon(Icons.lock),
+        prefixIcon: Icon(Icons.lock_outline),
         suffixIcon: IconButton( icon: Icon( isobscure ? Icons.visibility: Icons.visibility_off), onPressed: ()=>setState((){
             if(type==1){
               isobscure = !isobscure;
@@ -403,7 +414,9 @@ class _RegisterState extends State<Register> {
           return 'Enter password';
         }else if (value.length < 8) {
           return 'Password must be at least 8 characters long';
-        } else {
+        } else if(type==2 && _passwordcontroller.text!=value){
+          return "Passwords does not match";
+        }else {
           return null;
         }
       },
